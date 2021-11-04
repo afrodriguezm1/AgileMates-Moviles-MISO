@@ -1,7 +1,7 @@
 package com.example.vinilos.models
 
 data class Album (
-    var id: Int?,
+    val id: Int?,
     val name:String,
     val cover:String,
     val releaseDate:String,
