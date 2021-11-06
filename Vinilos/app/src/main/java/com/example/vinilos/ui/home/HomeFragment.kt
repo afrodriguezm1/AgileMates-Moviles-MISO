@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment
 
 import com.example.vinilos.databinding.FragmentHomeBinding
 import com.example.vinilos.models.Album
+import com.example.vinilos.viewmodels.AlbumViewModel
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
+
+    private lateinit var albumViewMode: AlbumViewModel
 
     private lateinit var albumList : ArrayList<Album>
 

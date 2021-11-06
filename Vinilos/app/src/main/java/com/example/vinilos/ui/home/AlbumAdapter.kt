@@ -34,9 +34,7 @@ class AlbumAdapter(private val context: Activity, private val arraylist: ArrayLi
                 .error(R.mipmap.ic_launcher_round)
                 .into(cover)
         }
-        catch (e: Exception) {
-
-        }
+        catch (e: Exception) {}
 
 
         return view
