@@ -6,8 +6,10 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.Spinner
 import com.example.vinilos.R
+import com.google.android.material.textfield.TextInputEditText
 
 class CreateAlbum : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,5 +55,15 @@ class CreateAlbum : AppCompatActivity() {
 
     fun cancelCreation(view: View) {
         this.onBackPressed();
+    }
+
+    fun createAlbum(view: View) {
+        val albumName : EditText = findViewById(R.id.editTextAlbumName)
+        val albumDescription : EditText = findViewById(R.id.editTextAlbumDescripcion)
+        val albumFecha : EditText = findViewById(R.id.editTextAlbumFecha)
+        val spinnerDisquera: Spinner = findViewById(R.id.spinnerAlbumDisquera)
+        val spinnerGenero: Spinner = findViewById(R.id.spinnerAlbumGenero)
+
+
     }
 }
