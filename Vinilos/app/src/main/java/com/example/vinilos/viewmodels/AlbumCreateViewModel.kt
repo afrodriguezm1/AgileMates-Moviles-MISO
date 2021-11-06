@@ -5,14 +5,14 @@ import androidx.lifecycle.*
 import com.example.vinilos.models.Album
 import com.example.vinilos.repositories.AlbumRepository
 
-class AlbumViewModel(application: Application) : AndroidViewModel(application) {
+class AlbumCreateViewModel (application: Application) :  AndroidViewModel(application) {
 
     private val albumsRepository = AlbumRepository(application)
 
-    private val _albums = MutableLiveData<List<Album>>()
+    private val _album = MutableLiveData<Album>()
 
-    val albums: LiveData<List<Album>>
-        get() = _albums
+    val album: LiveData<Album>
+        get() = _album
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
 
@@ -24,13 +24,24 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
+    //TODO: Set Values con controles de la vista (binding)
+    private val albumView = Album(
+        id = 0,
+        name = "prueba100",
+        cover = "prueba100",
+        recordLabel = "prueba100",
+        releaseDate = "prueba100",
+        genre = "prueba100",
+        description = "prueba100"
+    )
+
     init {
         refreshDataFromNetwork()
     }
 
     private fun refreshDataFromNetwork() {
-        albumsRepository.refreshAlbumList({
-            _albums.postValue(it)
+        albumsRepository.refreshAlbumCreate(albumView,{
+            _album.postValue(it)
             _eventNetworkError.value = false
             _isNetworkErrorShown.value = false
         }, {
@@ -44,9 +55,9 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AlbumViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(AlbumCreateViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return AlbumViewModel(app) as T
+                return AlbumCreateViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
