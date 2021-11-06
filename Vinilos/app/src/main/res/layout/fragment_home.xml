@@ -5,6 +5,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@drawable/ic_dashboard_black_24dp"
+        android:contentDescription="Crear"
+        android:layout_margin="16dp" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/albumsRv"
         android:layout_width="fill_parent"
