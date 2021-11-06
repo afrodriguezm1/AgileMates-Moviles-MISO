@@ -1,10 +1,12 @@
 package com.example.vinilos.ui.home
 
 import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,7 +17,9 @@ import com.example.vinilos.R
 
 import com.example.vinilos.databinding.FragmentHomeBinding
 import com.example.vinilos.models.Album
+import com.example.vinilos.ui.createAlbum.CreateAlbum
 import com.example.vinilos.viewmodels.AlbumViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -39,6 +43,12 @@ class HomeFragment : Fragment() {
         recyclerView = binding.albumsRv
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
+
+        val getButton: FloatingActionButton = view.findViewById(R.id.fab);
+        getButton.setOnClickListener {
+            val intent = Intent (activity, CreateAlbum::class.java)
+            activity?.startActivity(intent)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
