@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="opciones_genero">
+        <item>Salsa</item>
+        <item>Rock</item>
+        <item>Classical</item>
+        <item>Folk</item>
+    </string-array>
+    <string-array name="opciones_disquera">
+        <item>SonyMusic</item>
+        <item>EMI</item>
+        <item>DiscosFuentes</item>
+        <item>Elektra</item>
+        <item>FaniaRecords</item>
+    </string-array>
+</resources>
