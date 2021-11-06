@@ -10,6 +10,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.vinilos.models.Album
 import org.json.JSONArray
+import org.json.JSONException
 import org.json.JSONObject
 
 class NetworkServiceAdapter constructor(context: Context) {
@@ -42,14 +43,27 @@ class NetworkServiceAdapter constructor(context: Context) {
                 onError(it)
             }))
     }
+
     fun postAlbum(
         body: JSONObject,
-        onComplete: (resp: JSONObject) -> Unit,
+        onComplete: (resp: Album) -> Unit,
         onError: (error: VolleyError) -> Unit
     ){
         requestQueue.add(postRequest("albums", body,
             { response ->
-                onComplete(response)
+                try {
+                   val album = Album(
+                        id = response.getInt("id"),
+                        name = response.getString("name"),
+                        cover = response.getString("cover"),
+                        recordLabel = response.getString("recordLabel"),
+                        releaseDate = response.getString("releaseDate"),
+                        genre = response.getString("genre"),
+                        description = response.getString("description"))
+                    onComplete(album)
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
             },
             {
                 onError(it)
