@@ -26,7 +26,6 @@ class AlbumRepository (private val application: Application){
         albumJSONObject.put("genre",album.genre)
         albumJSONObject.put("recordLabel",album.recordLabel)
 
-        NetworkServiceAdapter.getInstance(application).postAlbum(
-            albumJSONObject, {callback(it)},onError)
+        NetworkServiceAdapter.getInstance(application).postAlbum(albumJSONObject)
     }
 }

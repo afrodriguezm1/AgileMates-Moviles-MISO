@@ -7,10 +7,10 @@
         <item>Folk</item>
     </string-array>
     <string-array name="opciones_disquera">
-        <item>SonyMusic</item>
+        <item>Sony Music</item>
         <item>EMI</item>
-        <item>DiscosFuentes</item>
+        <item>Discos Fuentes</item>
         <item>Elektra</item>
-        <item>FaniaRecords</item>
+        <item>Fania Records</item>
     </string-array>
 </resources>

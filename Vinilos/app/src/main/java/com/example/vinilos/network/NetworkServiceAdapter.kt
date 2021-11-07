@@ -1,6 +1,7 @@
 package com.example.vinilos.network
 
 import android.content.Context
+import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -12,6 +13,11 @@ import com.example.vinilos.models.Album
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import java.nio.charset.Charset
+import com.android.volley.AuthFailureError
+
+
+
 
 class NetworkServiceAdapter constructor(context: Context) {
     companion object{
@@ -44,31 +50,33 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
-    fun postAlbum(
-        body: JSONObject,
-        onComplete: (resp: Album) -> Unit,
-        onError: (error: VolleyError) -> Unit
-    ){
-        requestQueue.add(postRequest("albums", body,
-            { response ->
-                try {
-                   val album = Album(
-                        id = response.getInt("id"),
-                        name = response.getString("name"),
-                        cover = response.getString("cover"),
-                        recordLabel = response.getString("recordLabel"),
-                        releaseDate = response.getString("releaseDate"),
-                        genre = response.getString("genre"),
-                        description = response.getString("description"))
-                    onComplete(album)
-                } catch (e: JSONException) {
-                    e.printStackTrace()
+
+    fun postAlbum(body: JSONObject){
+        val url = BASE_URL + "albums"
+
+        requestQueue.add(object : JsonObjectRequest(Method.POST, url, body,
+            object : Response.Listener<JSONObject?> {
+                override fun onResponse(response: JSONObject?) {
+                    Log.i("StartActivity", response.toString())
                 }
-            },
-            {
-                onError(it)
+            }, object : Response.ErrorListener {
+                override fun onErrorResponse(error: VolleyError) {
+                    Log.i("StartActivity", error.toString())
+                }
+            }) {
+
+            override fun getHeaders(): Map<String, String> {
+                Log.d("parametros post",body.toString())
+                val headers = HashMap<String, String>()
+                headers["Content-Type"] = "application/json"
+                return headers
             }
-        ))
+
+            override fun getParams(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                return params
+            }
+        })
     }
 
     private fun getRequest(

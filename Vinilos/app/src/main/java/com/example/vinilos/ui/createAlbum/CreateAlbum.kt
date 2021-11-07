@@ -2,19 +2,26 @@ package com.example.vinilos.ui.createAlbum
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.Spinner
 import com.example.vinilos.R
-import com.google.android.material.textfield.TextInputEditText
+import com.example.vinilos.models.Album
+import com.example.vinilos.viewmodels.AlbumViewModel
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import com.example.vinilos.ui.album.AlbumsAdapter
 
 class CreateAlbum : AppCompatActivity() {
+
+    private lateinit var viewModel: AlbumViewModel
+    private var viewModelAdapter: AlbumsAdapter? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_album)
+
 
         val actionbar = supportActionBar
         //set actionbar title
@@ -46,6 +53,18 @@ class CreateAlbum : AppCompatActivity() {
             // Apply the adapter to the spinner
             spinnerDisquera.adapter = adapter
         }
+
+        viewModel = ViewModelProvider(
+            this,
+            AlbumViewModel.Factory(application)
+        ).get(AlbumViewModel::class.java)
+
+        viewModel.album.observe(this, Observer<Album> {
+            it.apply {
+                viewModel.refreshDataCreateFromNetwork()
+                cancelCreation();
+            }
+        })
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -53,17 +72,29 @@ class CreateAlbum : AppCompatActivity() {
         return true
     }
 
-    fun cancelCreation(view: View) {
+    fun cancelCreation() {
         this.onBackPressed();
     }
 
     fun createAlbum(view: View) {
         val albumName : EditText = findViewById(R.id.editTextAlbumName)
         val albumDescription : EditText = findViewById(R.id.editTextAlbumDescripcion)
-        val albumFecha : EditText = findViewById(R.id.editTextAlbumFecha)
-        val spinnerDisquera: Spinner = findViewById(R.id.spinnerAlbumDisquera)
-        val spinnerGenero: Spinner = findViewById(R.id.spinnerAlbumGenero)
+        val albumReleaseDate : EditText = findViewById(R.id.editTextAlbumFecha)
+        val spinnerRecorLabel: Spinner = findViewById(R.id.spinnerAlbumDisquera)
+        val spinnerGenre: Spinner = findViewById(R.id.spinnerAlbumGenero)
+        val cover : EditText = findViewById(R.id.editTextAlbumPortada)
 
+        val albumView = Album(
+            id = 0,
+            name = albumName.text.toString(),
+            cover= cover.text.toString(),
+            releaseDate= albumReleaseDate.text.toString(),
+            description=albumDescription.text.toString(),
+            genre= spinnerGenre.selectedItem.toString(),
+            recordLabel= spinnerRecorLabel.selectedItem.toString()
+        )
 
+        viewModel.setAlbum(albumView)
     }
 }
+
