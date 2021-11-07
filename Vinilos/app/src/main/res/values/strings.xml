@@ -4,6 +4,8 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="tittle_album">Álbumes</string>
+    <style name="tittle_collecto">Colleccionistas</style>
+    <style name="title_artists">Artistas</style>
 
     <string name="activity_create_album_tittle">Crear album</string>
     <string name="activity_create_album_nombre">Nombre</string>
