@@ -1,8 +1,6 @@
-package com.example.vinilos.ui.home
+package com.example.vinilos.ui.album
 
-import android.app.Activity
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
@@ -11,7 +9,6 @@ import com.example.vinilos.R
 import com.example.vinilos.databinding.AlbumItemBinding
 import com.example.vinilos.models.Album
 import com.squareup.picasso.Picasso
-import java.lang.Exception
 
 class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
 
@@ -33,8 +30,15 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
         holder.viewDataBinding.also {
             it.album = albums[position]
+            try{
+                Picasso.get()
+                    .load(albums[position].cover)
+                    .error(R.mipmap.ic_launcher_round)
+                    .into(holder.viewDataBinding.imageCover)
+            }
+            catch (e: Exception) { }
         }
-        //holder.viewDataBinding.album.
+
     }
 
     override fun getItemCount(): Int {
