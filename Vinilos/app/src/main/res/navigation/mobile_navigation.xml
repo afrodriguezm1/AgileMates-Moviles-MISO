@@ -8,19 +8,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.vinilos.ui.home.HomeFragment"
+        android:name="com.example.vinilos.ui.album.AlbumFragment"
         android:label="@string/tittle_album"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_album" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.vinilos.ui.dashboard.DashboardFragment"
+        android:name="com.example.vinilos.ui.coleccionista.ColeccionistaFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_coleccionista" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.vinilos.ui.notifications.NotificationsFragment"
+        android:name="com.example.vinilos.ui.artistas.ArtistasFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_artistas" />
 </navigation>

@@ -1,12 +1,10 @@
-package com.example.vinilos.ui.home
+package com.example.vinilos.ui.album
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,14 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinilos.R
 
-import com.example.vinilos.databinding.FragmentHomeBinding
+import com.example.vinilos.databinding.FragmentAlbumBinding
 import com.example.vinilos.models.Album
 import com.example.vinilos.ui.createAlbum.CreateAlbum
 import com.example.vinilos.viewmodels.AlbumViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
-class HomeFragment : Fragment() {
-    private var _binding: FragmentHomeBinding? = null
+class AlbumFragment : Fragment() {
+    private var _binding: FragmentAlbumBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewModel: AlbumViewModel
@@ -33,7 +31,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentAlbumBinding.inflate(inflater, container, false)
         val view = binding.root
         viewModelAdapter = AlbumsAdapter()
         return view
@@ -61,11 +59,13 @@ class HomeFragment : Fragment() {
             this,
             AlbumViewModel.Factory(activity.application)
         ).get(AlbumViewModel::class.java)
+
         viewModel.albums.observe(viewLifecycleOwner, Observer<List<Album>> {
             it.apply {
                 viewModelAdapter!!.albums = this
             }
         })
+
         viewModel.eventNetworkError.observe(
             viewLifecycleOwner,
             Observer<Boolean> { isNetworkError ->

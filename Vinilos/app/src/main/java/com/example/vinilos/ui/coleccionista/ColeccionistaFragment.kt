@@ -1,4 +1,4 @@
-package com.example.vinilos.ui.dashboard
+package com.example.vinilos.ui.coleccionista
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.vinilos.R
-import com.example.vinilos.databinding.FragmentDashboardBinding
+import com.example.vinilos.databinding.FragmentColeccionistaBinding
 
-class DashboardFragment : Fragment() {
+class ColeccionistaFragment : Fragment() {
 
-    private lateinit var dashboardViewModel: DashboardViewModel
-    private var _binding: FragmentDashboardBinding? = null
+    private lateinit var dashboardViewModel: ColeccionistaViewModel
+    private var _binding: FragmentColeccionistaBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,9 +24,9 @@ class DashboardFragment : Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         dashboardViewModel =
-                ViewModelProvider(this).get(DashboardViewModel::class.java)
+                ViewModelProvider(this).get(ColeccionistaViewModel::class.java)
 
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        _binding = FragmentColeccionistaBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textDashboard

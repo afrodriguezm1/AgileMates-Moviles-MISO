@@ -1,4 +1,4 @@
-package com.example.vinilos.ui.home
+package com.example.vinilos.ui.album
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
