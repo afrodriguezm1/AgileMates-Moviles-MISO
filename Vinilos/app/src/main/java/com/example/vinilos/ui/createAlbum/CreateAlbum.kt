@@ -33,10 +33,10 @@ class CreateAlbum : AppCompatActivity() {
         ArrayAdapter.createFromResource(
             this,
             R.array.opciones_genero,
-            android.R.layout.simple_spinner_item
+            R.layout.my_spinner_item
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(R.layout.my_spinner_drawable)
             // Apply the adapter to the spinner
             spinnerGenero.adapter = adapter
         }
@@ -46,10 +46,10 @@ class CreateAlbum : AppCompatActivity() {
         ArrayAdapter.createFromResource(
             this,
             R.array.opciones_disquera,
-            android.R.layout.simple_spinner_item
+            R.layout.my_spinner_item
         ).also { adapter ->
             // Specify the layout to use when the list of choices appears
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter.setDropDownViewResource(R.layout.my_spinner_drawable)
             // Apply the adapter to the spinner
             spinnerDisquera.adapter = adapter
         }
