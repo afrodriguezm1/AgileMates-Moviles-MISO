@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="dark_white">#DBDBDB</color>
+    <color name="dark">#121212</color>
+    <color name="apple_blossom">#AB4148</color>
+    <color name="bali_hai">#8D99B9</color>
+    <color name="lynch">#68739B</color>
+    <color name="bali_hai_transparent">#808D99B9</color>
+
 </resources>
