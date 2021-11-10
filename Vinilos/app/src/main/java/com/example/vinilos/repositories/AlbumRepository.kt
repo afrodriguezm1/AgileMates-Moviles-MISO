@@ -8,15 +8,11 @@ import org.json.JSONObject
 
 class AlbumRepository (private val application: Application){
 
-    fun refreshAlbumList(callback: (List<Album>)->Unit, onError: (VolleyError)->Unit) {
-        NetworkServiceAdapter.getInstance(application).getAlbums({
-            callback(it)
-        },
-            onError
-        )
+    suspend fun refreshAlbumList(): List<Album> {
+        return NetworkServiceAdapter.getInstance(application).getAlbums()
     }
 
-    fun refreshAlbumCreate(album:Album,callback: (Album)->Unit, onError: (VolleyError)->Unit) {
+    fun refreshAlbumCreate(album:Album) {
 
         val albumJSONObject = JSONObject()
         albumJSONObject.put("name",album.name)
