@@ -4,5 +4,6 @@ data class Performer (
     val performerId: Int,
     val name:String,
     val image:String,
-    val description:String
+    val description:String,
+    val date:String
 )

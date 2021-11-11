@@ -4,16 +4,16 @@
     <item
         android:id="@+id/navigation_home"
         android:icon="@drawable/ic_album"
-        android:title="@string/tittle_album" />
+        android:title="@string/title_album" />
 
     <item
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_collectors"
         android:icon="@drawable/ic_collector"
-        android:title="@string/title_dashboard" />
+        android:title="@string/title_collectors" />
 
     <item
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_performers"
         android:icon="@drawable/ic_artists"
-        android:title="@string/title_notifications" />
+        android:title="@string/title_artists" />
 
 </menu>
