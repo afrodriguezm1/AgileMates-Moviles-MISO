@@ -132,6 +132,62 @@ class NetworkServiceAdapter constructor(context: Context) {
         })
     }
 
+    suspend fun getBandsDetail(performerId: Int) = suspendCoroutine<Performer>{ cont->
+        val url = BASE_URL + "bands/" + performerId
+        requestQueue.add(getRequest(url,
+            Response.Listener<String> { response ->
+                val resp = JSONObject(response)
+
+                val albumList = mutableListOf<Album>()
+                for (i in 0 until resp.getJSONArray("albums").length()) {
+                    val item = resp.getJSONArray("albums").getJSONObject(i)
+                    albumList.add(i, Album(id = item.getInt("id"),name = item.getString("name"), cover = item.getString("cover"), recordLabel = item.getString("recordLabel"), releaseDate = item.getString("releaseDate"), genre = item.getString("genre"), description = item.getString("description")))
+                }
+                val performer = Performer(id = "BAND_" + resp.getInt("id"),
+                    performerId = resp.getInt("id"),
+                    performerType = PerformerType.BAND,
+                    name = resp.getString("name"),
+                    image = resp.getString("image"),
+                    description = resp.getString("description"),
+                    date = resp.getString("creationDate"),
+                    albums = albumList
+                )
+
+                cont.resume(performer)
+            },
+            Response.ErrorListener {
+                throw it
+            }))
+    }
+
+    suspend fun getMusicianDetail(performerId: Int) = suspendCoroutine<Performer>{ cont->
+        val url = BASE_URL + "musicians/" + performerId
+        requestQueue.add(getRequest(url,
+            Response.Listener<String> { response ->
+                val resp = JSONObject(response)
+
+                val albumList = mutableListOf<Album>()
+                for (i in 0 until resp.getJSONArray("albums").length()) {
+                    val item = resp.getJSONArray("albums").getJSONObject(i)
+                    albumList.add(i, Album(id = item.getInt("id"),name = item.getString("name"), cover = item.getString("cover"), recordLabel = item.getString("recordLabel"), releaseDate = item.getString("releaseDate"), genre = item.getString("genre"), description = item.getString("description")))
+                }
+                val performer = Performer(id = "BAND_" + resp.getInt("id"),
+                    performerId = resp.getInt("id"),
+                    performerType = PerformerType.MUSICIAN,
+                    name = resp.getString("name"),
+                    image = resp.getString("image"),
+                    description = resp.getString("description"),
+                    date = resp.getString("birthDate"),
+                    albums = albumList
+                )
+
+                cont.resume(performer)
+            },
+            Response.ErrorListener {
+                throw it
+            }))
+    }
+
     private fun getRequest(
         path: String,
         responseListener: Response.Listener<String>,
