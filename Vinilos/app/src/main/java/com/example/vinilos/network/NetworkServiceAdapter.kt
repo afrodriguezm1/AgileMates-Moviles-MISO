@@ -11,6 +11,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.vinilos.models.Album
 import com.example.vinilos.models.Performer
+import com.example.vinilos.models.PerformerType
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.coroutines.resume
@@ -56,11 +57,14 @@ class NetworkServiceAdapter constructor(context: Context) {
                     list.add(
                         i,
                         Performer(
+                            id = PerformerType.MUSICIAN.toString() + "_" + item.getInt("id"),
                             performerId = item.getInt("id"),
                             name = item.getString("name"),
                             image = item.getString("image"),
                             description = item.getString("description"),
-                            date = item.getString("birthDate")
+                            date = item.getString("birthDate"),
+                            performerType = PerformerType.MUSICIAN,
+                            albums = listOf<Album>()
                         )
                     )
                 }
@@ -70,6 +74,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                 throw it
             }))
     }
+
     suspend fun getBands() = suspendCoroutine<List<Performer>>{ cont->
         requestQueue.add(getRequest("bands",
             Response.Listener<String> { response ->
@@ -80,11 +85,14 @@ class NetworkServiceAdapter constructor(context: Context) {
                     list.add(
                         i,
                         Performer(
+                            id = PerformerType.BAND.toString() +"_" + item.getInt("id"),
                             performerId = item.getInt("id"),
                             name = item.getString("name"),
                             image = item.getString("image"),
                             description = item.getString("description"),
-                            date = item.getString("creationDate")
+                            date = item.getString("creationDate"),
+                            performerType = PerformerType.BAND,
+                            albums = listOf<Album>()
                         )
                     )
                 }
