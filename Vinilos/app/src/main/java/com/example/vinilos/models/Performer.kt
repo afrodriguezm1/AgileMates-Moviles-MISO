@@ -6,7 +6,7 @@ data class Performer (
     val name:String,
     val image:String,
     val description:String,
-    val creationDate: String,
+    val date: String,
     val performerType: Enum<PerformerType>,
     val albums : List<Album>?
 )

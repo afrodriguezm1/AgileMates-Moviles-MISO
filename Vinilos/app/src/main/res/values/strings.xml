@@ -3,7 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="tittle_album">Álbumes</string>
+    <string name="title_album">Álbumes</string>
 
     <string name="activity_create_album_tittle">Crear album</string>
     <string name="activity_create_album_nombre">Nombre</string>
@@ -14,6 +14,6 @@
     <string name="activity_create_album_disquera">Seleccionar disquera</string>
     <string name="activity_create_album_create">Crear</string>
     <string name="activity_create_album_cancel">Cancelar</string>
-    <style name="tittle_collecto">Colleccionistas</style>
-    <style name="title_artists">Artistas</style>
+    <string name="title_collectors">Colleccionistas</string>
+    <string name="title_artists">Artistas</string>
 </resources>
