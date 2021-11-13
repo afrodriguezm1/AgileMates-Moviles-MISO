@@ -1,10 +1,13 @@
 package com.example.vinilos
 
 import android.view.View
+import android.widget.AdapterView
 import androidx.lifecycle.Lifecycle
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onData
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.UiController
 import androidx.test.espresso.action.ViewActions.click
@@ -23,47 +26,56 @@ import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isClickable
 
 import androidx.test.espresso.ViewAction
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
+import com.example.vinilos.ui.album.AlbumsAdapter
+import org.hamcrest.CoreMatchers.`is`
+import org.hamcrest.Description
 import org.hamcrest.Matcher
+import org.hamcrest.TypeSafeMatcher
+import org.hamcrest.core.IsInstanceOf.instanceOf
+import org.junit.BeforeClass
 import java.util.EnumSet.allOf
 
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 class CreateAlbumTest{
-    private lateinit var scenario: ActivityScenario<CreateAlbum>
+    private lateinit var scenario: ActivityScenario<MainActivity>
 
     @Before
     fun setup(){
         scenario = launchActivity()
         scenario.moveToState(Lifecycle.State.RESUMED)
+
+        onView(withId(R.id.fab)).perform(click())
     }
 
     @Test
     fun testCreateAlbum(){
         val albumName = "test1FromJUnit4"
         val cover = "test1"
-        val recordLabel = "Salsa"
-        val releaseDate = "test1"
-        val genre = "Sony Music"
+        val releaseDate = "2015-20-02"
         val description = "test1"
+        val genre = "Salsa"
+        val recordLabel = "Sony Music"
 
         //Espresso Matcher and Action
-        onView(withId(R.id.editTextAlbumName)).perform(typeText(albumName))
-        onView(withId(R.id.editTextAlbumDescripcion)).perform(typeText(description))
-        onView(withId(R.id.editTextAlbumFecha)).perform(typeText(releaseDate))
-        //onView(withId(R.id.spinnerAlbumDisquera)).perform(typeText(recordLabel))
-        //onView(withId(R.id.spinnerAlbumGenero)).perform(typeText(genre))
-        onView(withId(R.id.editTextAlbumPortada)).perform(typeText(cover))
+        onView(withId(R.id.editTextAlbumName)).perform(ViewActions.replaceText(albumName))
+        onView(withId(R.id.editTextAlbumDescripcion)).perform(ViewActions.replaceText(description))
+        onView(withId(R.id.editTextAlbumFecha)).perform(ViewActions.replaceText(releaseDate))
 
-        //Espresso.closeSoftKeyboard()
+        onView(withId(R.id.spinnerAlbumGenero)).perform(click())
+        onView(withText(genre)).perform(click());
+
+        onView(withId(R.id.spinnerAlbumDisquera)).perform(click())
+        onView(withText(recordLabel)).perform(click());
+        onView(withId(R.id.editTextAlbumPortada)).perform(ViewActions.replaceText(cover))
+
         onView(withId(R.id.button2)).perform(click())
 
         //Assertion
-        //onView(withId(R.id.editTextAlbumName)).check(matches(withText(albumName)))
-        //onView(withId(R.id.editTextAlbumName)).check(matches(isDisplayed()))
+
     }
-
-
-
 }
