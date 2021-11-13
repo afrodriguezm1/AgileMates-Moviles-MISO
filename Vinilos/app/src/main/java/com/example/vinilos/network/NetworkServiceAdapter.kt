@@ -15,12 +15,14 @@ import org.json.JSONException
 import org.json.JSONObject
 import java.nio.charset.Charset
 import com.android.volley.AuthFailureError
+import com.example.vinilos.models.Performer
+import com.example.vinilos.models.Track
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 class NetworkServiceAdapter constructor(context: Context) {
     companion object{
-        const val BASE_URL= "https://back-vinyls-populated.herokuapp.com/"
+        const val BASE_URL= "https://public-back-sandbox-vinyls.herokuapp.com/"
         var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {
@@ -38,9 +40,23 @@ class NetworkServiceAdapter constructor(context: Context) {
             Response.Listener<String> { response ->
                 val resp = JSONArray(response)
                 val list = mutableListOf<Album>()
+
                 for (i in 0 until resp.length()) {
                     val item = resp.getJSONObject(i)
-                    list.add(i, Album(id = item.getInt("id"),name = item.getString("name"), cover = item.getString("cover"), recordLabel = item.getString("recordLabel"), releaseDate = item.getString("releaseDate"), genre = item.getString("genre"), description = item.getString("description")))
+
+                    val performers = item.getJSONArray("performers")
+                    val performerList = mutableListOf<Performer>()
+                    for (j in 0 until item.getJSONArray("performers").length()){
+                        performerList.add(Performer(performerId = performers.getJSONObject(j).getInt("id"), name = performers.getJSONObject(j).getString("name"), image = performers.getJSONObject(j).getString("image"), description = performers.getJSONObject(j).getString("description")))
+                    }
+
+                    val tracks = item.getJSONArray("tracks")
+                    val tracksList = mutableListOf<Track>()
+                    for (j in 0 until item.getJSONArray("tracks").length()){
+                        tracksList.add(Track(id = tracks.getJSONObject(j).getInt("id"), name = tracks.getJSONObject(j).getString("name"), duration = tracks.getJSONObject(j).getString("duration")))
+                    }
+
+                    list.add(i, Album(id = item.getInt("id"),name = item.getString("name"), cover = item.getString("cover"), recordLabel = item.getString("recordLabel"), releaseDate = item.getString("releaseDate"), genre = item.getString("genre"), description = item.getString("description"), performers = performerList, tracks = tracksList))
                 }
                 cont.resume(list)
             },

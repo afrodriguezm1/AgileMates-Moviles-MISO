@@ -37,6 +37,9 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
                     .into(holder.viewDataBinding.imageCover)
             }
             catch (e: Exception) { }
+            holder.viewDataBinding.root.setOnClickListener{
+
+            }
         }
 
     }
