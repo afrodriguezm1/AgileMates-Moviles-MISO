@@ -96,10 +96,18 @@ class NetworkServiceAdapter constructor(context: Context) {
     }
 
 
-    fun postAlbum(body: JSONObject){
+    suspend fun postAlbum(album: Album){
         val url = BASE_URL + "albums"
 
-        requestQueue.add(object : JsonObjectRequest(Method.POST, url, body,
+        val albumJSONObject = JSONObject()
+        albumJSONObject.put("name",album.name)
+        albumJSONObject.put("cover",album.cover)
+        albumJSONObject.put("releaseDate",album.releaseDate)
+        albumJSONObject.put("description",album.description)
+        albumJSONObject.put("genre",album.genre)
+        albumJSONObject.put("recordLabel",album.recordLabel)
+
+        requestQueue.add(object : JsonObjectRequest(Method.POST, url, albumJSONObject,
             object : Response.Listener<JSONObject?> {
                 override fun onResponse(response: JSONObject?) {
                     Log.i("StartActivity", response.toString())

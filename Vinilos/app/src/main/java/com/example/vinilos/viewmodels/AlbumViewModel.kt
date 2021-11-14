@@ -41,8 +41,15 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun refreshDataCreateFromNetwork() {
-        _album.value?.let {
-            albumsRepository.refreshAlbumCreate(it)
+        try {
+            viewModelScope.launch (Dispatchers.Default) {
+                _album.value?.let {
+                    albumsRepository.refreshAlbumCreate(it)
+                }
+            }
+        } catch (e:Exception) {
+            Log.d("Error", e.toString())
+            _eventNetworkError.value = true
         }
     }
 
