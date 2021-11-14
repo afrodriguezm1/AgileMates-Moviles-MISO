@@ -1,5 +1,6 @@
 package com.example.vinilos.ui.artistas
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,9 +12,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.vinilos.R
 import com.example.vinilos.databinding.FragmentArtistasBinding
 import com.example.vinilos.models.Performer
+import com.example.vinilos.ui.createAlbum.CreateAlbum
+import com.example.vinilos.ui.performerDetail.PerformerDetail
 import com.example.vinilos.viewmodels.PerformerViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
 
 class ArtistasFragment : Fragment() {
 
@@ -37,7 +43,20 @@ class ArtistasFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = binding.performersRv
         recyclerView.layoutManager = LinearLayoutManager(context)
+
+        viewModelAdapter?.setOnItemClickListener(object: PerformerAdapter.OnItemClickListener{
+            override fun onItemClick(position: Int) {
+                var performer  = viewModel.performers.value?.get(position)
+                //Toast.makeText(this@ArtistasFragment.context,"click en ${performer?.id} de tipo ${performer?.performerType}", Toast.LENGTH_SHORT).show()
+                var intent = Intent(this@ArtistasFragment.context,PerformerDetail::class.java)
+                intent.putExtra("performerId",performer?.performerId)
+                intent.putExtra("performerType",performer?.performerType)
+                startActivity(intent)
+            }
+        })
+
         recyclerView.adapter = viewModelAdapter
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -61,6 +80,7 @@ class ArtistasFragment : Fragment() {
             Observer<Boolean> { isNetworkError ->
                 if (isNetworkError) onNetworkError()
             })
+
     }
 
     override fun onDestroyView() {

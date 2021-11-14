@@ -3,7 +3,9 @@ package com.example.vinilos.viewmodels
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.vinilos.models.Album
 import com.example.vinilos.models.Performer
+import com.example.vinilos.models.PerformerType
 import com.example.vinilos.repositories.PerformerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,6 +15,10 @@ class PerformerViewModel (application: Application) :  AndroidViewModel(applicat
 
     private val performerRepository = PerformerRepository(application)
     private val _performers = MutableLiveData<List<Performer>>()
+    private val _performerDetail = MutableLiveData<Performer>()
+
+    val performerDetail: LiveData<Performer>
+        get() = _performerDetail
 
     val performers: LiveData<List<Performer>>
         get() = _performers
@@ -29,6 +35,17 @@ class PerformerViewModel (application: Application) :  AndroidViewModel(applicat
 
     init {
         refreshDataFromNetwork()
+    }
+
+    fun showPerformerDetail(performer: Performer){
+        _performerDetail.value = performer
+    }
+
+    suspend fun refreshDetailPerformerFromNetwork() {
+        _performerDetail.value?.let {
+            val performerType = PerformerType.valueOf("BAND")
+            performerRepository.refreshPerformerDetail(performerType,it.performerId)
+        }
     }
 
     private fun refreshDataFromNetwork() {
