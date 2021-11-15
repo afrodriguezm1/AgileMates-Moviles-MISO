@@ -1,5 +1,6 @@
 package com.example.vinilos.ui.performerDetail
 
+import android.R.attr
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -20,6 +21,11 @@ import com.example.vinilos.ui.artistas.PerformerAdapter
 import com.example.vinilos.viewmodels.PerformerViewModel
 import com.squareup.picasso.Picasso
 import android.view.ViewGroup
+import androidx.core.view.marginRight
+import android.R.attr.right
+
+import android.R.attr.left
+
 
 
 
@@ -64,18 +70,17 @@ class PerformerDetail : AppCompatActivity() {
                 loadImage(performer?.image,imageViewPerformer)
 
                 val scale = resources.displayMetrics.density
-                val dpWidthInPx = (150 * scale).toInt()
+                val dpWidthInPx = (200 * scale).toInt()
 
-                performer?.albums?.forEachIndexed { index, element ->
-                    if(index == 0){
-                        loadImage(element.cover,albumPerformerImg)
-                        albumPerformerImg.setVisibility(View.VISIBLE);
-                    }else {
-                        val imageView = ImageView(albumPerformerImg.context)
-                        val layout = findViewById<LinearLayout>(R.id.containerPerformerAlbumList)
-                        layout?.addView(imageView)
-                        loadImage(element.cover,imageView)
-                    }
+                performer?.albums?.forEach {
+                    val imageView = ImageView(albumPerformerImg.context)
+                    imageView.layoutParams= LinearLayout.LayoutParams(dpWidthInPx, dpWidthInPx)
+                    val lp = LinearLayout.LayoutParams(dpWidthInPx, dpWidthInPx)
+                    lp.setMargins(0, 0,25,0)
+                    imageView.setLayoutParams(lp);
+                    val layout = findViewById<LinearLayout>(R.id.containerPerformerAlbumList)
+                    layout?.addView(imageView)
+                    loadImage(it.cover,imageView)
                 }
             }
         })
