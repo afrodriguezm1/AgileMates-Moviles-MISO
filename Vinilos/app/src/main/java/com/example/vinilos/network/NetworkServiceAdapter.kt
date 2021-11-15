@@ -47,6 +47,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                 throw it
             }))
     }
+
     suspend fun getMusicians() = suspendCoroutine<List<Performer>>{ cont->
         requestQueue.add(getRequest("musicians",
             Response.Listener<String> { response ->
@@ -141,11 +142,10 @@ class NetworkServiceAdapter constructor(context: Context) {
     }
 
     suspend fun getBandsDetail(performerId: Int) = suspendCoroutine<Performer>{ cont->
-        val url = BASE_URL + "bands/" + performerId
+        val url = "bands/$performerId"
         requestQueue.add(getRequest(url,
             Response.Listener<String> { response ->
                 val resp = JSONObject(response)
-
                 val albumList = mutableListOf<Album>()
                 for (i in 0 until resp.getJSONArray("albums").length()) {
                     val item = resp.getJSONArray("albums").getJSONObject(i)
@@ -169,11 +169,10 @@ class NetworkServiceAdapter constructor(context: Context) {
     }
 
     suspend fun getMusicianDetail(performerId: Int) = suspendCoroutine<Performer>{ cont->
-        val url = BASE_URL + "musicians/" + performerId
+        val url = "musicians/$performerId"
         requestQueue.add(getRequest(url,
             Response.Listener<String> { response ->
                 val resp = JSONObject(response)
-
                 val albumList = mutableListOf<Album>()
                 for (i in 0 until resp.getJSONArray("albums").length()) {
                     val item = resp.getJSONArray("albums").getJSONObject(i)
@@ -188,7 +187,6 @@ class NetworkServiceAdapter constructor(context: Context) {
                     date = resp.getString("birthDate"),
                     albums = albumList
                 )
-
                 cont.resume(performer)
             },
             Response.ErrorListener {

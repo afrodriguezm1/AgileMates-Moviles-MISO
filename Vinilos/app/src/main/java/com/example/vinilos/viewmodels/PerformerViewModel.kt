@@ -16,6 +16,12 @@ class PerformerViewModel (application: Application) :  AndroidViewModel(applicat
     private val performerRepository = PerformerRepository(application)
     private val _performers = MutableLiveData<List<Performer>>()
     private val _performerDetail = MutableLiveData<Performer>()
+    private val _performerId = MutableLiveData<Int>()
+    private var _performerType : PerformerType = PerformerType.MUSICIAN
+
+
+    val performerId: LiveData<Int>
+        get() = _performerId
 
     val performerDetail: LiveData<Performer>
         get() = _performerDetail
@@ -37,14 +43,22 @@ class PerformerViewModel (application: Application) :  AndroidViewModel(applicat
         refreshDataFromNetwork()
     }
 
-    fun showPerformerDetail(performer: Performer){
-        _performerDetail.value = performer
+    fun setPerformerDetailId(performerId: Int, performerType: String){
+        _performerId.value = performerId
+        _performerType = PerformerType.valueOf(performerType)
     }
 
-    suspend fun refreshDetailPerformerFromNetwork() {
-        _performerDetail.value?.let {
-            val performerType = PerformerType.valueOf("BAND")
-            performerRepository.refreshPerformerDetail(performerType,it.performerId)
+    fun refreshDetailPerformerFromNetwork() {
+        try {
+            viewModelScope.launch (Dispatchers.Default) {
+                _performerId.value?.let {
+                    var data = performerRepository.refreshPerformerDetail(_performerType,it)
+                    _performerDetail.postValue(data)
+                }
+            }
+        } catch (e:Exception) {
+            Log.d("Error", e.toString())
+            _eventNetworkError.value = true
         }
     }
 

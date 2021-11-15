@@ -1,57 +1,106 @@
 package com.example.vinilos.ui.performerDetail
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.Spinner
+import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.example.vinilos.R
 import com.example.vinilos.models.Album
 import com.example.vinilos.models.Performer
-import com.example.vinilos.ui.album.AlbumsAdapter
+import com.example.vinilos.models.PerformerType
 import com.example.vinilos.ui.artistas.PerformerAdapter
-import com.example.vinilos.viewmodels.AlbumViewModel
 import com.example.vinilos.viewmodels.PerformerViewModel
+import com.squareup.picasso.Picasso
+import android.view.ViewGroup
+
+
+
 
 class PerformerDetail : AppCompatActivity() {
 
     private lateinit var viewModel: PerformerViewModel
     private var viewModelAdapter: PerformerAdapter? = null
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.performer_detail)
 
+        val textViewPerformerName : TextView = findViewById(R.id.textViewPerformerName)
+        val textViewCreationDate : TextView = findViewById(R.id.textViewCreationDate)
+        val textViewDescription : TextView = findViewById(R.id.textViewDescription)
+        val imageViewPerformer : ImageView = findViewById(R.id.imagePerformer)
+        val albumPerformerImg: ImageView = findViewById(R.id.albumPerformerImg)
+
         val actionbar = supportActionBar
         actionbar!!.title = "";
         actionbar.setDisplayHomeAsUpEnabled(true)
+
 
         viewModel = ViewModelProvider(
             this,
             PerformerViewModel.Factory(application)
         ).get(PerformerViewModel::class.java)
 
-        viewModel.performerDetail.observe(this, Observer<Performer> {
+        viewModel.performerId.observe(this, Observer<Int> {
             it.apply {
-                //viewModel.refreshDetailPerformerFromNetwork()
+                viewModel.refreshDetailPerformerFromNetwork()
             }
         })
 
+        viewModel.performerDetail.observe(this, Observer<Performer> {
+            it.apply {
+                val performer =  viewModel.performerDetail.value
+                textViewPerformerName.text = performer?.name;
+                textViewCreationDate.text = performer?.date;
+                textViewDescription.text = performer?.description;
+                loadImage(performer?.image,imageViewPerformer)
 
-        val textViewPerformerName : TextView = findViewById(R.id.textViewPerformerName)
-        val textViewCreationDate : TextView = findViewById(R.id.textViewCreationDate)
-        val textViewDescription : TextView = findViewById(R.id.textViewDescription)
+                val scale = resources.displayMetrics.density
+                val dpWidthInPx = (150 * scale).toInt()
+
+                performer?.albums?.forEachIndexed { index, element ->
+                    if(index == 0){
+                        loadImage(element.cover,albumPerformerImg)
+                        albumPerformerImg.setVisibility(View.VISIBLE);
+                    }else {
+                        val imageView = ImageView(albumPerformerImg.context)
+                        val layout = findViewById<LinearLayout>(R.id.containerPerformerAlbumList)
+                        layout?.addView(imageView)
+                        loadImage(element.cover,imageView)
+                    }
+                }
+            }
+        })
 
         val bundle : Bundle?= intent.extras
         val performerType =  bundle!!.getString("performerType")
-        val id =  bundle?.getInt("performerId")
+        val performerId =  bundle?.getInt("performerId")
 
-        textViewPerformerName.text = "Bony Casas $id"
-        textViewCreationDate.text = "Bony Casas $id"
-        textViewDescription.text = "Bony Casas $id"
+        if (performerType != null) {
+            viewModel.setPerformerDetailId(performerId, performerType)
+        }
 
+    }
+
+    fun loadImage(image:String?,control:ImageView){
+        try{
+            Picasso.get()
+                .load(image)
+                .error(R.mipmap.ic_launcher_round)
+                .into(control)
+        }catch (e: Exception) { }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

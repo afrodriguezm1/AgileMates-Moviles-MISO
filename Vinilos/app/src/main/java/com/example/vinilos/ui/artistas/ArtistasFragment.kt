@@ -50,7 +50,7 @@ class ArtistasFragment : Fragment() {
                 //Toast.makeText(this@ArtistasFragment.context,"click en ${performer?.id} de tipo ${performer?.performerType}", Toast.LENGTH_SHORT).show()
                 var intent = Intent(this@ArtistasFragment.context,PerformerDetail::class.java)
                 intent.putExtra("performerId",performer?.performerId)
-                intent.putExtra("performerType",performer?.performerType)
+                intent.putExtra("performerType",performer?.performerType.toString())
                 startActivity(intent)
             }
         })
