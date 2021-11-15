@@ -76,7 +76,7 @@ class PerformerDetail : AppCompatActivity() {
                     val imageView = ImageView(albumPerformerImg.context)
                     imageView.layoutParams= LinearLayout.LayoutParams(dpWidthInPx, dpWidthInPx)
                     val lp = LinearLayout.LayoutParams(dpWidthInPx, dpWidthInPx)
-                    lp.setMargins(0, 0,25,0)
+                    lp.setMargins(0, 0,50,0)
                     imageView.setLayoutParams(lp);
                     val layout = findViewById<LinearLayout>(R.id.containerPerformerAlbumList)
                     layout?.addView(imageView)
