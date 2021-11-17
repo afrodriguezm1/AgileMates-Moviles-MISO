@@ -1,7 +1,8 @@
 package com.example.vinilos.ui.album
 
+import android.graphics.LinearGradient
 import android.os.Bundle
-import android.util.Log
+import android.text.TextPaint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +17,6 @@ import com.example.vinilos.R
 import com.example.vinilos.databinding.AlbumDetailBinding
 import com.example.vinilos.models.Album
 import com.example.vinilos.viewmodels.AlbumDetailViewModel
-import com.example.vinilos.viewmodels.AlbumViewModel
 import com.squareup.picasso.Picasso
 
 class AlbumDetailFragment : Fragment() {
@@ -107,3 +107,4 @@ class AlbumDetailFragment : Fragment() {
         }
     }
 }
+

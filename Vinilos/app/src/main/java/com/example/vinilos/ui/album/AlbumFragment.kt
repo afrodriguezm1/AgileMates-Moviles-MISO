@@ -2,7 +2,6 @@ package com.example.vinilos.ui.album
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinilos.R
-
 import com.example.vinilos.databinding.FragmentAlbumBinding
 import com.example.vinilos.models.Album
 import com.example.vinilos.ui.createAlbum.CreateAlbum

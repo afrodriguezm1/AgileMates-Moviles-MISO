@@ -19,7 +19,7 @@
     <fragment
         android:id="@+id/albumDetailFragment"
         android:name="com.example.vinilos.ui.album.AlbumDetailFragment"
-        android:label="Detalle"
+        android:label=""
         tools:layout="@layout/fragment_album_detail">
         <argument
             android:name="albumId"
