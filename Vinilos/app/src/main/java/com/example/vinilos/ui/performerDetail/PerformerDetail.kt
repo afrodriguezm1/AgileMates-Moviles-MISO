@@ -49,7 +49,7 @@ class PerformerDetail : AppCompatActivity() {
             it.apply {
                 val performer =  viewModel.performerDetail.value
                 textViewPerformerName.text = performer?.name;
-                textViewCreationDate.text = performer?.date;
+                textViewCreationDate.text = performer?.date?.substring(0,10) ?: "";
                 textViewDescription.text = performer?.description;
                 loadImage(performer?.image,imageViewPerformer)
 

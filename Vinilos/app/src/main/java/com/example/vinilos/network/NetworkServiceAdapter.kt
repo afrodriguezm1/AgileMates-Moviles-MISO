@@ -14,6 +14,7 @@ import com.example.vinilos.models.Performer
 import com.example.vinilos.models.PerformerType
 import org.json.JSONArray
 import org.json.JSONObject
+import com.example.vinilos.models.Track
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -37,15 +38,104 @@ class NetworkServiceAdapter constructor(context: Context) {
             Response.Listener<String> { response ->
                 val resp = JSONArray(response)
                 val list = mutableListOf<Album>()
+
                 for (i in 0 until resp.length()) {
                     val item = resp.getJSONObject(i)
-                    list.add(i, Album(id = item.getInt("id"),name = item.getString("name"), cover = item.getString("cover"), recordLabel = item.getString("recordLabel"), releaseDate = item.getString("releaseDate"), genre = item.getString("genre"), description = item.getString("description")))
+
+                    val performers = item.getJSONArray("performers")
+                    val performerList = mutableListOf<Performer>()
+                    for (j in 0 until item.getJSONArray("performers").length()){
+                        performerList.add(
+                            j,
+                            Performer(
+                                id = PerformerType.MUSICIAN.toString() + "_" + performers.getJSONObject(j).getInt("id"),
+                                performerId = performers.getJSONObject(j).getInt("id"),
+                                name = performers.getJSONObject(j).getString("name"),
+                                image = performers.getJSONObject(j).getString("image"),
+                                date = "",
+                                description = performers.getJSONObject(j).getString("description"),
+                                performerType = PerformerType.MUSICIAN,
+                                albums = mutableListOf<Album>()
+                            )
+                        )
+                    }
+
+                    list.add(
+                        i,
+                        Album(
+                            id = item.getInt("id"),
+                            name = item.getString("name"),
+                            cover = item.getString("cover"),
+                            recordLabel = item.getString("recordLabel"),
+                            releaseDate = item.getString("releaseDate"),
+                            genre = item.getString("genre"),
+                            description = item.getString("description"),
+                            performers = performerList,
+                            tracks = mutableListOf<Track>()
+                        )
+                    )
                 }
                 cont.resume(list)
             },
             Response.ErrorListener {
                 throw it
             }))
+    }
+
+    suspend fun getAlbum(idAlbum: Int) = suspendCoroutine<Album> { cont ->
+        requestQueue.add(getRequest("albums/" + idAlbum.toString(),
+            Response.Listener<String> { response ->
+                val resp = JSONObject(response)
+
+                val performers = resp.getJSONArray("performers")
+                val performerList = mutableListOf<Performer>()
+                for (j in 0 until resp.getJSONArray("performers").length()){
+                    performerList.add(
+                        j,
+                        Performer(
+                            id = PerformerType.MUSICIAN.toString() + "_" + performers.getJSONObject(j).getInt("id"),
+                            performerId = performers.getJSONObject(j).getInt("id"),
+                            name = performers.getJSONObject(j).getString("name"),
+                            image = performers.getJSONObject(j).getString("image"),
+                            date = performers.getJSONObject(j).getString("birthDate"),
+                            description = performers.getJSONObject(j).getString("description"),
+                            performerType = PerformerType.MUSICIAN,
+                            albums = mutableListOf<Album>()
+                        )
+                    )
+                }
+
+                val tracks = resp.getJSONArray("tracks")
+                val tracksList = mutableListOf<Track>()
+                for (j in 0 until resp.getJSONArray("tracks").length()){
+                    tracksList.add(
+                        j,
+                        Track(
+                            id = tracks.getJSONObject(j).getInt("id"),
+                            name = tracks.getJSONObject(j).getString("name"),
+                            duration = tracks.getJSONObject(j).getString("duration")
+                        )
+                    )
+                }
+
+                cont.resume(
+                    Album(
+                        id = resp.getInt("id"),
+                        name = resp.getString("name"),
+                        cover = resp.getString("cover"),
+                        recordLabel = resp.getString("recordLabel"),
+                        releaseDate = resp.getString("releaseDate"),
+                        genre = resp.getString("genre"),
+                        description = resp.getString("description"),
+                        performers = performerList,
+                        tracks = tracksList
+                    )
+                )
+            },
+            Response.ErrorListener {
+                throw it
+            }))
+
     }
 
     suspend fun getMusicians() = suspendCoroutine<List<Performer>>{ cont->
@@ -65,7 +155,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                             description = item.getString("description"),
                             date = item.getString("birthDate"),
                             performerType = PerformerType.MUSICIAN,
-                            albums = listOf<Album>()
+                            albums = mutableListOf<Album>()
                         )
                     )
                 }
@@ -93,7 +183,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                             description = item.getString("description"),
                             date = item.getString("creationDate"),
                             performerType = PerformerType.BAND,
-                            albums = listOf<Album>()
+                            albums = mutableListOf<Album>()
                         )
                     )
                 }
@@ -149,7 +239,20 @@ class NetworkServiceAdapter constructor(context: Context) {
                 val albumList = mutableListOf<Album>()
                 for (i in 0 until resp.getJSONArray("albums").length()) {
                     val item = resp.getJSONArray("albums").getJSONObject(i)
-                    albumList.add(i, Album(id = item.getInt("id"),name = item.getString("name"), cover = item.getString("cover"), recordLabel = item.getString("recordLabel"), releaseDate = item.getString("releaseDate"), genre = item.getString("genre"), description = item.getString("description")))
+                    albumList.add(
+                        i,
+                        Album(
+                            id = item.getInt("id"),
+                            name = item.getString("name"),
+                            cover = item.getString("cover"),
+                            recordLabel = item.getString("recordLabel"),
+                            releaseDate = item.getString("releaseDate"),
+                            genre = item.getString("genre"),
+                            description = item.getString("description"),
+                            performers = mutableListOf<Performer>(),
+                            tracks = mutableListOf<Track>()
+                        )
+                    )
                 }
                 val performer = Performer(id = "BAND_" + resp.getInt("id"),
                     performerId = resp.getInt("id"),
@@ -176,7 +279,20 @@ class NetworkServiceAdapter constructor(context: Context) {
                 val albumList = mutableListOf<Album>()
                 for (i in 0 until resp.getJSONArray("albums").length()) {
                     val item = resp.getJSONArray("albums").getJSONObject(i)
-                    albumList.add(i, Album(id = item.getInt("id"),name = item.getString("name"), cover = item.getString("cover"), recordLabel = item.getString("recordLabel"), releaseDate = item.getString("releaseDate"), genre = item.getString("genre"), description = item.getString("description")))
+                    albumList.add(
+                        i,
+                        Album(
+                            id = item.getInt("id"),
+                            name = item.getString("name"),
+                            cover = item.getString("cover"),
+                            recordLabel = item.getString("recordLabel"),
+                            releaseDate = item.getString("releaseDate"),
+                            genre = item.getString("genre"),
+                            description = item.getString("description"),
+                            performers = mutableListOf<Performer>(),
+                            tracks = mutableListOf<Track>()
+                        )
+                    )
                 }
                 val performer = Performer(id = "BAND_" + resp.getInt("id"),
                     performerId = resp.getInt("id"),

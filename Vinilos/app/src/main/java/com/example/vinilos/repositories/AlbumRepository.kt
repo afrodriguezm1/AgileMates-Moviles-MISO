@@ -14,4 +14,9 @@ class AlbumRepository (private val application: Application){
     suspend fun refreshAlbumCreate(album:Album) {
         NetworkServiceAdapter.getInstance(application).postAlbum(album)
     }
+
+    suspend fun refreshAlbumDetail(albumId: Int): Album{
+        return NetworkServiceAdapter.getInstance(application).getAlbum(albumId)
+    }
+
 }
