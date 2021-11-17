@@ -70,7 +70,7 @@
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{album.recordLabel}"
+                android:text="Artista"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="italic" />
