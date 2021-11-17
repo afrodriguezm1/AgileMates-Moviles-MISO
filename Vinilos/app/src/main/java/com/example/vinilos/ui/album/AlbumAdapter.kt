@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinilos.R
 import com.example.vinilos.databinding.AlbumItemBinding
@@ -38,7 +39,8 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
             }
             catch (e: Exception) { }
             holder.viewDataBinding.root.setOnClickListener{
-
+                val action = AlbumFragmentDirections.actionAlbumListToAlbumDetail(albums[position].id)
+                holder.viewDataBinding.root.findNavController().navigate(action)
             }
         }
 

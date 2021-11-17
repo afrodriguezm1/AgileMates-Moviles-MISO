@@ -9,14 +9,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class AlbumViewModel(application: Application) : AndroidViewModel(application) {
-
+class AlbumDetailViewModel(application: Application, albumId: Int) : AndroidViewModel(application) {
     private val albumsRepository = AlbumRepository(application)
-    private val _albums = MutableLiveData<List<Album>>()
-    private val _album = MutableLiveData<Album>()
 
-    val albums: LiveData<List<Album>>
-        get() = _albums
+    private val _album = MutableLiveData<Album>()
 
     val album: LiveData<Album>
         get() = _album
@@ -31,43 +27,17 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
-
-    fun setAlbum(album: Album){
-        _album.value = album
-    }
+    val id: Int = albumId
 
     init {
         refreshDataFromNetwork()
     }
 
-    fun refreshDataCreateFromNetwork() {
-        _album.value?.let {
-            albumsRepository.refreshAlbumCreate(it)
-        }
-    }
-
-    private fun refreshDataFromNetwork() {
-        try {
-            viewModelScope.launch (Dispatchers.Default){
-                withContext(Dispatchers.Default){
-                    var data = albumsRepository.refreshAlbumList()
-                    _albums.postValue(data)
-                }
-                _eventNetworkError.postValue(false)
-                _isNetworkErrorShown.postValue(false)
-            }
-        }
-        catch (e:Exception) {
-            Log.d("Error", e.toString())
-            _eventNetworkError.value = true
-        }
-    }
-
-    fun refreshDataDetailAlbumFromNetWork(albumId: Int){
+    fun refreshDataFromNetwork(){
         try{
             viewModelScope.launch (Dispatchers.Default) {
                 withContext(Dispatchers.Default){
-                    var data = albumsRepository.refreshAlbumDetail(albumId)
+                    var data = albumsRepository.refreshAlbumDetail(id)
                     _album.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
@@ -84,11 +54,11 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
         _isNetworkErrorShown.value = true
     }
 
-    class Factory(val app: Application) : ViewModelProvider.Factory {
+    class Factory(val app: Application, val albumId: Int) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(AlbumViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(AlbumDetailViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return AlbumViewModel(app) as T
+                return AlbumDetailViewModel(app, albumId) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
