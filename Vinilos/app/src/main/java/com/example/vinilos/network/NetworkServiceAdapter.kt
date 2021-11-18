@@ -51,9 +51,9 @@ class NetworkServiceAdapter constructor(context: Context) {
                                 id = PerformerType.MUSICIAN.toString() + "_" + performers.getJSONObject(j).getInt("id"),
                                 performerId = performers.getJSONObject(j).getInt("id"),
                                 name = performers.getJSONObject(j).getString("name"),
-                                image = performers.getJSONObject(j).getString("image"),
+                                image = "",
                                 date = "",
-                                description = performers.getJSONObject(j).getString("description"),
+                                description = "",
                                 performerType = PerformerType.MUSICIAN,
                                 albums = mutableListOf<Album>()
                             )
@@ -96,9 +96,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                             id = PerformerType.MUSICIAN.toString() + "_" + performers.getJSONObject(j).getInt("id"),
                             performerId = performers.getJSONObject(j).getInt("id"),
                             name = performers.getJSONObject(j).getString("name"),
-                            image = performers.getJSONObject(j).getString("image"),
-                            date = performers.getJSONObject(j).getString("birthDate"),
-                            description = performers.getJSONObject(j).getString("description"),
+                            image = "", date = "", description = "",
                             performerType = PerformerType.MUSICIAN,
                             albums = mutableListOf<Album>()
                         )
@@ -155,7 +153,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                             description = item.getString("description"),
                             date = item.getString("birthDate"),
                             performerType = PerformerType.MUSICIAN,
-                            albums = mutableListOf<Album>()
+                            albums = listOf<Album>()
                         )
                     )
                 }
@@ -183,7 +181,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                             description = item.getString("description"),
                             date = item.getString("creationDate"),
                             performerType = PerformerType.BAND,
-                            albums = mutableListOf<Album>()
+                            albums = listOf<Album>()
                         )
                     )
                 }
