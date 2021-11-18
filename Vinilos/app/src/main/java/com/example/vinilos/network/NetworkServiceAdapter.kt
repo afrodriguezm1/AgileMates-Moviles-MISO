@@ -153,7 +153,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                             description = item.getString("description"),
                             date = item.getString("birthDate"),
                             performerType = PerformerType.MUSICIAN,
-                            albums = mutableListOf<Album>()
+                            albums = listOf<Album>()
                         )
                     )
                 }
@@ -181,7 +181,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                             description = item.getString("description"),
                             date = item.getString("creationDate"),
                             performerType = PerformerType.BAND,
-                            albums = mutableListOf<Album>()
+                            albums = listOf<Album>()
                         )
                     )
                 }
