@@ -27,7 +27,6 @@ import androidx.test.espresso.matcher.ViewMatchers.isClickable
 
 import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
-import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import com.example.vinilos.ui.album.AlbumsAdapter
 import org.hamcrest.CoreMatchers.`is`
@@ -61,21 +60,25 @@ class CreateAlbumTest{
         val genre = "Salsa"
         val recordLabel = "Sony Music"
 
-        //Espresso Matcher and Action
         onView(withId(R.id.editTextAlbumName)).perform(ViewActions.replaceText(albumName))
         onView(withId(R.id.editTextAlbumDescripcion)).perform(ViewActions.replaceText(description))
         onView(withId(R.id.editTextAlbumFecha)).perform(ViewActions.replaceText(releaseDate))
+        onView(withId(R.id.editTextAlbumPortada)).perform(ViewActions.replaceText(cover))
 
         onView(withId(R.id.spinnerAlbumGenero)).perform(click())
         onView(withText(genre)).perform(click());
 
         onView(withId(R.id.spinnerAlbumDisquera)).perform(click())
         onView(withText(recordLabel)).perform(click());
-        onView(withId(R.id.editTextAlbumPortada)).perform(ViewActions.replaceText(cover))
 
         onView(withId(R.id.button2)).perform(click())
 
         //Assertion
 
+    }
+
+    @Test
+    fun testCancelCreateAlbum(){
+        onView(withId(R.id.button)).perform(click())
     }
 }
