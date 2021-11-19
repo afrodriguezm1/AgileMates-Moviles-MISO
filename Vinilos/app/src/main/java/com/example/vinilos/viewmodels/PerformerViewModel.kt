@@ -3,7 +3,9 @@ package com.example.vinilos.viewmodels
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.vinilos.models.Album
 import com.example.vinilos.models.Performer
+import com.example.vinilos.models.PerformerType
 import com.example.vinilos.repositories.PerformerRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,6 +15,16 @@ class PerformerViewModel (application: Application) :  AndroidViewModel(applicat
 
     private val performerRepository = PerformerRepository(application)
     private val _performers = MutableLiveData<List<Performer>>()
+    private val _performerDetail = MutableLiveData<Performer>()
+    private val _performerId = MutableLiveData<Int>()
+    private var _performerType : PerformerType = PerformerType.MUSICIAN
+
+
+    val performerId: LiveData<Int>
+        get() = _performerId
+
+    val performerDetail: LiveData<Performer>
+        get() = _performerDetail
 
     val performers: LiveData<List<Performer>>
         get() = _performers
@@ -29,6 +41,25 @@ class PerformerViewModel (application: Application) :  AndroidViewModel(applicat
 
     init {
         refreshDataFromNetwork()
+    }
+
+    fun setPerformerDetailId(performerId: Int, performerType: String){
+        _performerId.value = performerId
+        _performerType = PerformerType.valueOf(performerType)
+    }
+
+    fun refreshDetailPerformerFromNetwork() {
+        try {
+            viewModelScope.launch (Dispatchers.Default) {
+                _performerId.value?.let {
+                    var data = performerRepository.refreshPerformerDetail(_performerType,it)
+                    _performerDetail.postValue(data)
+                }
+            }
+        } catch (e:Exception) {
+            Log.d("Error", e.toString())
+            _eventNetworkError.value = true
+        }
     }
 
     private fun refreshDataFromNetwork() {

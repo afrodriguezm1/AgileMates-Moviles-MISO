@@ -11,6 +11,8 @@ import com.example.vinilos.models.Album
 import com.example.vinilos.viewmodels.AlbumViewModel
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.vinilos.models.Performer
+import com.example.vinilos.models.Track
 import com.example.vinilos.ui.album.AlbumsAdapter
 
 class CreateAlbum : AppCompatActivity() {
@@ -91,7 +93,9 @@ class CreateAlbum : AppCompatActivity() {
             releaseDate= albumReleaseDate.text.toString(),
             description=albumDescription.text.toString(),
             genre= spinnerGenre.selectedItem.toString(),
-            recordLabel= spinnerRecorLabel.selectedItem.toString()
+            recordLabel= spinnerRecorLabel.selectedItem.toString(),
+            performers = emptyList<Performer>(),
+            tracks = emptyList<Track>()
         )
 
         viewModel.setAlbum(albumView)

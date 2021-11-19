@@ -41,8 +41,15 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun refreshDataCreateFromNetwork() {
-        _album.value?.let {
-            albumsRepository.refreshAlbumCreate(it)
+        try {
+            viewModelScope.launch (Dispatchers.Default) {
+                _album.value?.let {
+                    albumsRepository.refreshAlbumCreate(it)
+                }
+            }
+        } catch (e:Exception) {
+            Log.d("Error", e.toString())
+            _eventNetworkError.value = true
         }
     }
 
@@ -52,6 +59,23 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
                 withContext(Dispatchers.Default){
                     var data = albumsRepository.refreshAlbumList()
                     _albums.postValue(data)
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
+            }
+        }
+        catch (e:Exception) {
+            Log.d("Error", e.toString())
+            _eventNetworkError.value = true
+        }
+    }
+
+    fun refreshDataDetailAlbumFromNetWork(albumId: Int){
+        try{
+            viewModelScope.launch (Dispatchers.Default) {
+                withContext(Dispatchers.Default){
+                    var data = albumsRepository.refreshAlbumDetail(albumId)
+                    _album.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
