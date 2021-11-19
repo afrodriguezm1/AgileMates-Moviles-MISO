@@ -16,6 +16,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import com.example.vinilos.models.Track
 import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
 class NetworkServiceAdapter constructor(context: Context) {
@@ -60,6 +61,19 @@ class NetworkServiceAdapter constructor(context: Context) {
                         )
                     }
 
+                    val tracks = item.getJSONArray("tracks")
+                    val tracksList = mutableListOf<Track>()
+                    for (j in 0 until item.getJSONArray("tracks").length()){
+                        tracksList.add(
+                            j,
+                            Track(
+                                id = tracks.getJSONObject(j).getInt("id"),
+                                name = tracks.getJSONObject(j).getString("name"),
+                                duration = tracks.getJSONObject(j).getString("duration")
+                            )
+                        )
+                    }
+
                     list.add(
                         i,
                         Album(
@@ -71,14 +85,14 @@ class NetworkServiceAdapter constructor(context: Context) {
                             genre = item.getString("genre"),
                             description = item.getString("description"),
                             performers = performerList,
-                            tracks = mutableListOf<Track>()
+                            tracks = tracksList
                         )
                     )
                 }
                 cont.resume(list)
             },
             Response.ErrorListener {
-                throw it
+                cont.resumeWithException(it)
             }))
     }
 
@@ -131,7 +145,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                 )
             },
             Response.ErrorListener {
-                throw it
+                cont.resumeWithException(it)
             }))
 
     }
@@ -160,7 +174,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                 cont.resume(list)
             },
             Response.ErrorListener {
-                throw it
+                cont.resumeWithException(it)
             }))
     }
 
@@ -188,7 +202,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                 cont.resume(list)
             },
             Response.ErrorListener {
-                throw it
+                cont.resumeWithException(it)
             }))
     }
 
@@ -265,7 +279,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                 cont.resume(performer)
             },
             Response.ErrorListener {
-                throw it
+                cont.resumeWithException(it)
             }))
     }
 
@@ -304,7 +318,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                 cont.resume(performer)
             },
             Response.ErrorListener {
-                throw it
+                cont.resumeWithException(it)
             }))
     }
 
