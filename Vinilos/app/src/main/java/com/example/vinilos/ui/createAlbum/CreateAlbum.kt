@@ -64,7 +64,7 @@ class CreateAlbum : AppCompatActivity() {
         viewModel.album.observe(this, Observer<Album> {
             it.apply {
                 viewModel.refreshDataCreateFromNetwork()
-                cancelCreation();
+                onBackPressed()
             }
         })
     }
@@ -74,8 +74,8 @@ class CreateAlbum : AppCompatActivity() {
         return true
     }
 
-    fun cancelCreation() {
-        this.onBackPressed();
+    fun cancelCreation(view: View) {
+        this.onBackPressed()
     }
 
     fun createAlbum(view: View) {
