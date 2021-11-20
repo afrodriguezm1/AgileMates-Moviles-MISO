@@ -16,7 +16,8 @@
         android:layout_marginVertical="5dp"
         android:background="@drawable/rounded_rectangle"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageCover"
@@ -34,7 +35,8 @@
             android:layout_height="match_parent"
             android:layout_marginVertical="15dp"
             android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_width="205dp"
@@ -58,7 +60,8 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="right">
+            android:gravity="right"
+            android:baselineAligned="false">
 
             <ImageButton
                 android:id="@+id/btnDetail"

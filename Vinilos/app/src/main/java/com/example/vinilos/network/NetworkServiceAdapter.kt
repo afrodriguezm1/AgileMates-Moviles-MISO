@@ -1,6 +1,7 @@
 package com.example.vinilos.network
 
 import android.content.Context
+import android.util.ArrayMap
 import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
@@ -231,13 +232,13 @@ class NetworkServiceAdapter constructor(context: Context) {
 
             override fun getHeaders(): Map<String, String> {
                 Log.d("parametros post",body.toString())
-                val headers = HashMap<String, String>()
+                val headers = ArrayMap<String, String>()
                 headers["Content-Type"] = "application/json"
                 return headers
             }
 
             override fun getParams(): Map<String, String> {
-                val params: MutableMap<String, String> = HashMap()
+                val params: MutableMap<String, String> = ArrayMap()
                 return params
             }
         })
