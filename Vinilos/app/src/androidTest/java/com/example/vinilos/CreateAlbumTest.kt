@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso
-import androidx.test.espresso.Espresso.onData
-import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.*
 import androidx.test.espresso.UiController
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.typeText
@@ -61,24 +60,29 @@ class CreateAlbumTest{
         val recordLabel = "Sony Music"
 
         onView(withId(R.id.editTextAlbumName)).perform(ViewActions.replaceText(albumName))
+        closeSoftKeyboard()
         onView(withId(R.id.editTextAlbumDescripcion)).perform(ViewActions.replaceText(description))
+        closeSoftKeyboard()
         onView(withId(R.id.editTextAlbumFecha)).perform(ViewActions.replaceText(releaseDate))
+        closeSoftKeyboard()
         onView(withId(R.id.editTextAlbumPortada)).perform(ViewActions.replaceText(cover))
+        closeSoftKeyboard()
 
         onView(withId(R.id.spinnerAlbumGenero)).perform(click())
+        closeSoftKeyboard()
         onView(withText(genre)).perform(click());
-
+        closeSoftKeyboard()
         onView(withId(R.id.spinnerAlbumDisquera)).perform(click())
+        closeSoftKeyboard()
         onView(withText(recordLabel)).perform(click());
-
         onView(withId(R.id.button2)).perform(click())
-
         //Assertion
 
     }
 
     @Test
     fun testCancelCreateAlbum(){
+        closeSoftKeyboard()
         onView(withId(R.id.button)).perform(click())
     }
 }
