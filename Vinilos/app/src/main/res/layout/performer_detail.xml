@@ -23,7 +23,8 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
-                tools:layout_editor_absoluteX="0dp">
+                tools:layout_editor_absoluteX="0dp"
+                android:baselineAligned="false">
 
                 <ImageView
                     android:id="@+id/imagePerformer"

@@ -27,7 +27,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:baselineAligned="false">
 
                 <ImageView
                     android:id="@+id/imageCover"
@@ -42,12 +43,14 @@
                     android:layout_height="match_parent"
                     android:orientation="vertical"
                     android:layout_marginHorizontal="10dp"
-                    android:paddingHorizontal="15dp">
+                    android:paddingHorizontal="15dp"
+                    android:baselineAligned="false">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:baselineAligned="false">
 
                         <TextView
                             android:id="@+id/albumName"
