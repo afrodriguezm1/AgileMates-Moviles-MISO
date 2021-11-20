@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.example.vinilos.models.Album
 import com.example.vinilos.models.Performer
+import com.example.vinilos.models.PerformerType
 
 class CacheManager (context: Context) {
     companion object{
@@ -36,6 +37,23 @@ class CacheManager (context: Context) {
         }
     }
 
+    fun addPerformers(performer: List<Performer>){
+        performers["performers"] = performer
+    }
+
+    fun addPerformer(performer: Performer){
+        if(performers.containsKey("performers")){
+            val perfor = performers["performers"]!!.toMutableList()
+            for(i in 0 until perfor.size){
+                if(perfor[i].id == performer.id){
+                    perfor[i] = performer
+                    performers["performers"] = perfor
+                    break
+                }
+            }
+        }
+    }
+
     fun getAlbums(): List<Album> {
         return if (albums.containsKey("albumes")) albums["albumes"]!! else listOf<Album>()
     }
@@ -50,5 +68,23 @@ class CacheManager (context: Context) {
             }
         }
         return Album(id = 0, name = "", cover = "", releaseDate = "", description = "", genre = "",recordLabel = "", tracks = emptyList(), performers = emptyList())
+    }
+
+    fun getPerformers(): List<Performer>{
+        return if (performers.containsKey("performers")) performers["performers"]!! else listOf<Performer>()
+    }
+
+    fun getPerformer(performerType: PerformerType, performerId: Int): Performer{
+        if(performers.containsKey("performers")){
+            val performers: List<Performer> = performers["performers"]!!
+            for(i in 0 until performers.size){
+                if(performers[i].performerId == performerId && performers[i].performerType == performerType){
+                    return performers[i]
+                }
+            }
+        }
+        return Performer(
+            id = "", performerId = 0 , name = "", image = "", description = "", date = "", performerType = PerformerType.MUSICIAN, albums = listOf<Album>()
+        )
     }
 }
