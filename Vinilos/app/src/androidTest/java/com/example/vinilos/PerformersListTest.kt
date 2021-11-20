@@ -3,23 +3,22 @@ package com.example.vinilos
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
-import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import com.example.vinilos.MainActivity
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 
+
 @LargeTest
 @RunWith(AndroidJUnit4::class)
 
-class MainActivityTest{
+class PerformersListTest{
     private lateinit var scenario: ActivityScenario<MainActivity>
 
     @Before
@@ -31,14 +30,16 @@ class MainActivityTest{
     @Test
     fun testListAlbum(){
         //Validar que hay al menos un registro con los datos completos
-        //Prerrequesitos: Se asume que existe al menos un registro en la lista de albums
+        //Prerrequesitos: Se asume que existe al menos un registro en la lista de artistas
 
-        //El album tiene cargada una imagen y con nombre
-        onView(withId(R.id.imageCover)).check(matches(ViewMatchers.isDisplayed()))
-        onView(withId(R.id.textView1)).check(matches(ViewMatchers.isDisplayed()))
+        Thread.sleep(1000);
+        onView(withId(R.id.navigation_performers)).perform(ViewActions.click())
+        Thread.sleep(5000);
 
-        //Espresso.closeSoftKeyboard()
-        //onView(withId(R.id.button2)).perform(click())
+        //Valida si la lista de artistas esta renderizada
+        onView(withId(R.id.performersRv)).check(matches(ViewMatchers.isDisplayed()))
 
+        //Valida si el primer item de la lista esta renderizado y se muestra el nombre.
+        onView(withId(R.id.performersRv)).check(matches(UtilityTest.atPosition(0, hasDescendant(withText("Rubén Blades Bellido de Luna")))))
     }
 }
