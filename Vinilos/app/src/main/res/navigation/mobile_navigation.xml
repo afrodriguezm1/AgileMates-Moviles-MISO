@@ -9,18 +9,31 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.vinilos.ui.album.AlbumFragment"
-        android:label="@string/tittle_album"
-        tools:layout="@layout/fragment_album" />
-
+        android:label="@string/title_album"
+        tools:layout="@layout/fragment_album" >
+        <action
+            android:id="@+id/action_albumList_to_albumDetail"
+            app:destination="@id/albumDetailFragment"
+            />
+    </fragment>
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/albumDetailFragment"
+        android:name="com.example.vinilos.ui.album.AlbumDetailFragment"
+        android:label=""
+        tools:layout="@layout/fragment_album_detail">
+        <argument
+            android:name="albumId"
+            app:argType="integer"/>
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_collectors"
         android:name="com.example.vinilos.ui.coleccionista.ColeccionistaFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_collectors"
         tools:layout="@layout/fragment_coleccionista" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_performers"
         android:name="com.example.vinilos.ui.artistas.ArtistasFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_artists"
         tools:layout="@layout/fragment_artistas" />
 </navigation>

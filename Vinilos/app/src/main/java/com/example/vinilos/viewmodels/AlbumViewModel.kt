@@ -1,9 +1,13 @@
 package com.example.vinilos.viewmodels
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.vinilos.models.Album
 import com.example.vinilos.repositories.AlbumRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AlbumViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -37,25 +41,50 @@ class AlbumViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun refreshDataCreateFromNetwork() {
-        _album.value?.let {
-            albumsRepository.refreshAlbumCreate(it,{
-                _album.postValue(it)
-                _eventNetworkError.value = false
-                _isNetworkErrorShown.value = false
-            }, {
-                _eventNetworkError.value = true
-            })
+        try {
+            viewModelScope.launch (Dispatchers.Default) {
+                _album.value?.let {
+                    albumsRepository.refreshAlbumCreate(it)
+                }
+            }
+        } catch (e:Exception) {
+            Log.d("Error", e.toString())
+            _eventNetworkError.value = true
         }
     }
 
     private fun refreshDataFromNetwork() {
-        albumsRepository.refreshAlbumList({
-            _albums.postValue(it)
-            _eventNetworkError.value = false
-            _isNetworkErrorShown.value = false
-        }, {
+        try {
+            viewModelScope.launch (Dispatchers.Default){
+                withContext(Dispatchers.Default){
+                    var data = albumsRepository.refreshAlbumList()
+                    _albums.postValue(data)
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
+            }
+        }
+        catch (e:Exception) {
+            Log.d("Error", e.toString())
             _eventNetworkError.value = true
-        })
+        }
+    }
+
+    fun refreshDataDetailAlbumFromNetWork(albumId: Int){
+        try{
+            viewModelScope.launch (Dispatchers.Default) {
+                withContext(Dispatchers.Default){
+                    var data = albumsRepository.refreshAlbumDetail(albumId)
+                    _album.postValue(data)
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
+            }
+        }
+        catch (e:Exception) {
+            Log.d("Error", e.toString())
+            _eventNetworkError.value = true
+        }
     }
 
     fun onNetworkErrorShown() {

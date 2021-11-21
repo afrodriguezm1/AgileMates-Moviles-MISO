@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinilos.R
 import com.example.vinilos.databinding.AlbumItemBinding
@@ -37,6 +38,21 @@ class AlbumsAdapter : RecyclerView.Adapter<AlbumsAdapter.AlbumViewHolder>(){
                     .into(holder.viewDataBinding.imageCover)
             }
             catch (e: Exception) { }
+            val performer = holder.viewDataBinding.textView3
+            var performersString = ""
+            for (i in 0 until albums[position].performers.size) {
+                if(i+1 > albums[position].performers.size){
+                    performersString += (albums[position].performers[i].name + ", ")
+                }
+                else {
+                    performersString += albums[position].performers[i].name
+                }
+            }
+            performer.setText(performersString)
+            holder.viewDataBinding.root.setOnClickListener{
+                val action = AlbumFragmentDirections.actionAlbumListToAlbumDetail(albums[position].id)
+                holder.viewDataBinding.root.findNavController().navigate(action)
+            }
         }
 
     }

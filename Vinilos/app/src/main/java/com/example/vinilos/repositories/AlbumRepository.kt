@@ -1,31 +1,37 @@
 package com.example.vinilos.repositories
 
 import android.app.Application
-import com.android.volley.VolleyError
+import android.util.Log
+import android.widget.Toast
 import com.example.vinilos.models.Album
+import com.example.vinilos.network.CacheManager
 import com.example.vinilos.network.NetworkServiceAdapter
-import org.json.JSONObject
 
 class AlbumRepository (private val application: Application){
 
-    fun refreshAlbumList(callback: (List<Album>)->Unit, onError: (VolleyError)->Unit) {
-        NetworkServiceAdapter.getInstance(application).getAlbums({
-            callback(it)
-        },
-            onError
-        )
+    suspend fun refreshAlbumList(): List<Album> {
+        var resp = emptyList<Album>()
+        try{
+            resp = NetworkServiceAdapter.getInstance(application).getAlbums()
+            CacheManager.getInstance(application.applicationContext).addAlbums(resp)
+        }catch (e: Exception) {
+            resp = CacheManager.getInstance(application.applicationContext).getAlbums()
+            //Toast.makeText(application.applicationContext, "Sin conección, datos del cache", Toast.LENGTH_LONG).show()
+        }
+        return resp
     }
 
-    fun refreshAlbumCreate(album:Album,callback: (Album)->Unit, onError: (VolleyError)->Unit) {
+    suspend fun refreshAlbumCreate(album:Album) {
+        NetworkServiceAdapter.getInstance(application).postAlbum(album)
+    }
 
-        val albumJSONObject = JSONObject()
-        albumJSONObject.put("name",album.name)
-        albumJSONObject.put("cover",album.cover)
-        albumJSONObject.put("releaseDate",album.releaseDate)
-        albumJSONObject.put("description",album.description)
-        albumJSONObject.put("genre",album.genre)
-        albumJSONObject.put("recordLabel",album.recordLabel)
-
-        NetworkServiceAdapter.getInstance(application).postAlbum(albumJSONObject)
+    suspend fun refreshAlbumDetail(albumId: Int): Album{
+        try{
+            val resp = NetworkServiceAdapter.getInstance(application).getAlbum(albumId)
+            CacheManager.getInstance(application.applicationContext).addAlbum(resp)
+            return resp
+        }catch (e: Exception) {
+            return CacheManager.getInstance(application.applicationContext).getAlbum(albumId)
+        }
     }
 }

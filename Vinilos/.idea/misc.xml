@@ -23,12 +23,17 @@
         <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.2625" />
         <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/activity_create_album.xml" value="0.24635416666666668" />
         <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/activity_main.xml" value="0.22" />
-        <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/album_item.xml" value="0.33" />
+        <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/album_detail.xml" value="0.22" />
+        <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/album_detail_track_item.xml" value="0.1" />
+        <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/album_item.xml" value="0.1" />
+        <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/fragment_album_detail.xml" value="0.20520833333333333" />
         <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/fragment_dashboard.xml" value="0.20520833333333333" />
         <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/fragment_notifications.xml" value="0.20520833333333333" />
         <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/my_spinner_drawable.xml" value="0.20520833333333333" />
         <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/my_spinner_item.xml" value="0.20520833333333333" />
+        <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/performer_detail.xml" value="0.2786458333333333" />
+        <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/performer_item.xml" value="0.36666666666666664" />
         <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/rounded_rectangle.xml" value="0.2028985507246377" />
         <entry key="..\:/Uniandes/2021-20/Mobiles/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/menu/bottom_nav_menu.xml" value="0.20520833333333333" />
         <entry key="..\:/Workspace/Uniandes/AgileMates/AgileMates-Moviles-MISO/Vinilos/app/src/main/res/layout/activity_main.xml" value="0.21927083333333333" />
