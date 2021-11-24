@@ -1,8 +1,7 @@
 package com.example.vinilos.ui.album
 
-import android.graphics.LinearGradient
+import android.content.Intent
 import android.os.Bundle
-import android.text.TextPaint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.vinilos.R
 import com.example.vinilos.databinding.AlbumDetailBinding
 import com.example.vinilos.models.Album
+import com.example.vinilos.ui.associateTrack.AssociateTrack
 import com.example.vinilos.viewmodels.AlbumDetailViewModel
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 
 class AlbumDetailFragment : Fragment() {
@@ -38,10 +39,25 @@ class AlbumDetailFragment : Fragment() {
         return view
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshDataFromNetwork()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = binding.albumTracks
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
+
+        val getButton: FloatingActionButton = view.findViewById(R.id.fab);
+        getButton.setOnClickListener {
+            val intent = Intent (activity, AssociateTrack::class.java)
+            val album : Album? = viewModel.album.value
+            if (album != null) {
+                intent.putExtra("albumId",album.id)
+            }
+            activity?.startActivity(intent)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

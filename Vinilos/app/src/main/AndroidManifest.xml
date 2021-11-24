@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Vinilos">
         <activity
+            android:name=".ui.associateTrack.AssociateTrack"
+            android:exported="false" />
+        <activity
             android:name=".ui.performerDetail.PerformerDetail"
             android:exported="false" />
         <activity
