@@ -17,4 +17,8 @@ class CollectorRepository (private val application: Application){
         }
         return resp
     }
+
+    suspend fun refreshCollectorDetail(collectorId: Int): Collector {
+        return NetworkServiceAdapter.getInstance(application).getCollector(collectorId)
+    }
 }
