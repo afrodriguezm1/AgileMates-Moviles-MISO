@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinilos.R
 import com.example.vinilos.databinding.CollectorItemBinding
@@ -29,6 +30,10 @@ class CollectorAdapter: RecyclerView.Adapter<CollectorAdapter.CollectorViewHolde
     override fun onBindViewHolder(holder: CollectorViewHolder, position: Int) {
         holder.viewDataBinding.also {
             it.collector = collectors[position]
+            holder.viewDataBinding.root.setOnClickListener{
+                val action = ColeccionistaFragmentDirections.actionCollectorListToCollectorDetail(collectors[position].id)
+                holder.viewDataBinding.root.findNavController().navigate(action)
+            }
         }
     }
 
