@@ -27,6 +27,7 @@
                 android:baselineAligned="false">
 
                 <ImageView
+                    android:contentDescription="@string/image_performer_description"
                     android:id="@+id/imagePerformer"
                     android:layout_width="match_parent"
                     android:layout_height="224dp"
@@ -93,6 +94,7 @@
                         android:gravity="left">
 
                         <ImageView
+                            android:contentDescription="@string/image_album_performer_description"
                             android:id="@+id/albumPerformerImg"
                             android:layout_width="0dp"
                             android:layout_height="0dp"
