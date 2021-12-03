@@ -54,6 +54,7 @@
             android:baselineAligned="false">
 
             <ImageButton
+                android:contentDescription="@string/button_collector_detail_description"
                 android:id="@+id/btnDetail"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="47dp"
