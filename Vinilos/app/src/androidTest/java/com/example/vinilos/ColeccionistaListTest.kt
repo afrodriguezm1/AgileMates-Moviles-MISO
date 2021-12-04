@@ -1,7 +1,10 @@
 package com.example.vinilos
 
+
+import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Lifecycle
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.launchActivity
 import androidx.test.espresso.Espresso.onView
@@ -11,43 +14,45 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.*
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.LargeTest
-import org.hamcrest.CoreMatchers.containsString
+import androidx.test.rule.ActivityTestRule
+import androidx.test.runner.AndroidJUnit4
+import org.hamcrest.Description
+import org.hamcrest.Matcher
+import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.allOf
+import org.hamcrest.TypeSafeMatcher
+import org.hamcrest.core.IsInstanceOf
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
-
 @LargeTest
 @RunWith(AndroidJUnit4::class)
+class ColeccionistaListTest {
 
-class AlbumDetailTest{
     private lateinit var scenario: ActivityScenario<MainActivity>
 
     @Before
-    fun setup(){
+    fun setup() {
         scenario = launchActivity()
         scenario.moveToState(Lifecycle.State.RESUMED)
     }
 
     @Test
-    fun testDetailAlbum(){
+    fun testColeccionistaLis(){
         //Validar que hay al menos un registro con los datos completos
         //Prerrequesitos: Se asume que existe al menos un registro en la lista de albums
 
-        Thread.sleep(5000);
+        Thread.sleep(1000);
 
-        //Valida si la lista de albumes esta renderizada
-        onView(withId(R.id.albumsRv)).check(matches(ViewMatchers.isDisplayed()))
-        onView(withId(R.id.albumsRv)).check(matches(UtilityTest.atPosition(0, hasDescendant(withText("Buscando América")))))
+        //Va a la lista de coleccionistas
+        onView(withId(R.id.navigation_collectors)).perform(ViewActions.click())
+        Thread.sleep(5000)
 
-        onView(withId(R.id.albumsRv)).perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
-        Thread.sleep(2000);
-
-        onView(withId(R.id.albumName)).check(matches(withText(containsString("Buscando América"))))
-        onView(withId(R.id.albumPerformers)).check(matches(withText(containsString("Rubén Blades Bellido de Luna"))))
-        onView(isRoot()).perform(ViewActions.pressBack())
-        onView(withId(R.id.albumsRv)).check(matches(ViewMatchers.isDisplayed()))
+        //Valida que existe la lista de coleccionistas
+        onView(withId(R.id.collectorRv)).check(matches(ViewMatchers.isDisplayed()))
+        onView(withId(R.id.collectorRv)).check(matches(UtilityTest.atPosition(0, hasDescendant(withText("Manolo Bellon")))))
     }
 }
