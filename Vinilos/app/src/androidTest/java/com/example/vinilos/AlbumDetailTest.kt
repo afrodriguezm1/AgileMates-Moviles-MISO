@@ -43,6 +43,7 @@ class AlbumDetailTest{
         onView(withId(R.id.albumsRv)).check(matches(UtilityTest.atPosition(0, hasDescendant(withText("Buscando América")))))
 
         onView(withId(R.id.albumsRv)).perform(actionOnItemAtPosition<RecyclerView.ViewHolder>(0, click()))
+        Thread.sleep(2000);
 
         onView(withId(R.id.albumName)).check(matches(withText(containsString("Buscando América"))))
         onView(withId(R.id.albumPerformers)).check(matches(withText(containsString("Rubén Blades Bellido de Luna"))))
