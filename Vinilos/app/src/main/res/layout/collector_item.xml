@@ -27,22 +27,15 @@
             android:orientation="vertical"
             android:baselineAligned="false">
 
-            <LinearLayout
-                android:layout_width="205dp"
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="176dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="176dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:text="@{collector.name}"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
+                android:layout_marginStart="15dp"
+                android:text="@{collector.name}"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
@@ -54,6 +47,7 @@
             android:baselineAligned="false">
 
             <ImageButton
+                android:contentDescription="@string/button_collector_detail_description"
                 android:id="@+id/btnDetail"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="47dp"

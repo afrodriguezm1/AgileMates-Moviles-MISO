@@ -18,9 +18,9 @@ class CacheManager (context: Context) {
                 }
             }
     }
-    private var albums: HashMap<String, List<Album>> = hashMapOf<String, List<Album>>()
+    private var albums: ArrayMap<String, List<Album>> = arrayMapOf<String, List<Album>>()
 
-    private val performers : HashMap<String, List<Performer>> = hashMapOf<String, List<Performer>>()
+    private val performers : ArrayMap<String, List<Performer>> = arrayMapOf<String, List<Performer>>()
 
     private val collectors : ArrayMap<String, List<Collector>> = arrayMapOf<String, List<Collector>>()
 
