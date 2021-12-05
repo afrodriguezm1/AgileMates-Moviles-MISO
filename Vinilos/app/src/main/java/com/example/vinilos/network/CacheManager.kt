@@ -1,10 +1,12 @@
 package com.example.vinilos.network
 
 import android.content.Context
-import android.util.Log
+import androidx.collection.ArrayMap
 import com.example.vinilos.models.Album
 import com.example.vinilos.models.Performer
 import com.example.vinilos.models.PerformerType
+import androidx.collection.arrayMapOf
+import com.example.vinilos.models.Collector
 
 class CacheManager (context: Context) {
     companion object{
@@ -16,9 +18,11 @@ class CacheManager (context: Context) {
                 }
             }
     }
-    private var albums: HashMap<String, List<Album>> = hashMapOf<String, List<Album>>()
+    private var albums: ArrayMap<String, List<Album>> = arrayMapOf<String, List<Album>>()
 
-    private val performers : HashMap<String, List<Performer>> = hashMapOf<String, List<Performer>>()
+    private val performers : ArrayMap<String, List<Performer>> = arrayMapOf<String, List<Performer>>()
+
+    private val collectors : ArrayMap<String, List<Collector>> = arrayMapOf<String, List<Collector>>()
 
     fun addAlbums( album: List<Album>) {
         albums["albumes"] = album
@@ -86,5 +90,13 @@ class CacheManager (context: Context) {
         return Performer(
             id = "", performerId = 0 , name = "", image = "", description = "", date = "", performerType = PerformerType.MUSICIAN, albums = listOf<Album>()
         )
+    }
+
+    fun addCollectors( collector: List<Collector>) {
+        collectors["collectors"] = collector
+    }
+
+    fun getCollectors(): List<Collector> {
+        return if (collectors.containsKey("collectors")) collectors["collectors"]!! else listOf<Collector>()
     }
 }

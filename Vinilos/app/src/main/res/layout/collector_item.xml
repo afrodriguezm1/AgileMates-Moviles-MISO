@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="performer"
-            type="com.example.vinilos.models.Performer"
+            name="collector"
+            type="com.example.vinilos.models.Collector"
             />
     </data>
 
@@ -19,17 +19,6 @@
         android:orientation="horizontal"
         android:baselineAligned="false">
 
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageCover"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginHorizontal="15dp"
-            android:layout_marginVertical="15dp"
-            android:contentDescription="Imagen del artista"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/ic_launcher_background"
-            app:shapeAppearanceOverlay="@style/circular" />
-
         <LinearLayout
             android:layout_width="179dp"
             android:layout_height="match_parent"
@@ -42,7 +31,8 @@
                 android:id="@+id/textView1"
                 android:layout_width="176dp"
                 android:layout_height="wrap_content"
-                android:text="@{performer.name}"
+                android:layout_marginStart="15dp"
+                android:text="@{collector.name}"
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -57,12 +47,12 @@
             android:baselineAligned="false">
 
             <ImageButton
-                android:contentDescription="@string/button_performer_detail_description"
+                android:contentDescription="@string/button_collector_detail_description"
                 android:id="@+id/btnDetail"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="47dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_height="match_parent"
+                android:layout_margin="1dp"
                 android:clickable="false"
                 android:src="@drawable/ic_action_detail"
                 android:tint="@color/apple_blossom" />
